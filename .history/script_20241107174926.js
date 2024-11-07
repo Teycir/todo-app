@@ -1,36 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const todoInput = document.getElementById('todoInput');
     const addTodoBtn = document.getElementById('addTodo');
-    const saveTodoBtn = document.getElementById('saveTodo');
-    const uploadTodoBtn = document.getElementById('uploadTodo');
     const todoList = document.getElementById('todoList');
 
     // Load todos from localStorage
     let todos = JSON.parse(localStorage.getItem('todos')) || [];
-    
-    // Function to save todos to txt file on Desktop
-    async function saveTodosTxt() {
-        const todoText = todos.map(todo => 
-            `[${todo.completed ? 'x' : ' '}] ${todo.text}`
-        ).join('\n');
-        
-        try {
-            const blob = new Blob([todoText], { type: 'text/plain' });
-            const handle = await window.showSaveFilePicker({
-                suggestedName: 'todos.txt',
-                startIn: 'desktop',
-                types: [{
-                    description: 'Text Files',
-                    accept: { 'text/plain': ['.txt'] },
-                }],
-            });
-            const writable = await handle.createWritable();
-            await writable.write(blob);
-            await writable.close();
-        } catch (err) {
-            console.error('Failed to save todos to file:', err);
-        }
-    }
 
     // Add ripple effect to buttons
     function createRipple(event) {
@@ -109,34 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Save todos to localStorage only
+    // Save todos to localStorage
     function saveTodos() {
         localStorage.setItem('todos', JSON.stringify(todos));
-    }
-
-    // Load todos from txt file
-    async function loadTodosFromFile() {
-        try {
-            const [fileHandle] = await window.showOpenFilePicker({
-                types: [{
-                    description: 'Text Files',
-                    accept: { 'text/plain': ['.txt'] },
-                }],
-            });
-            const file = await fileHandle.getFile();
-            const content = await file.text();
-            
-            // Parse the txt file content
-            todos = content.split('\n').map(line => ({
-                text: line.substring(4),
-                completed: line.startsWith('[x]')
-            })).filter(todo => todo.text);
-            
-            renderTodos();
-            saveTodos();
-        } catch (err) {
-            console.error('Failed to load todos from file:', err);
-        }
     }
 
     // Add new todo
@@ -154,15 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Add effects to buttons
+    // Add effects to Add button
     addButtonEffects(addTodoBtn);
-    addButtonEffects(saveTodoBtn);
-    addButtonEffects(uploadTodoBtn);
 
     // Event listeners
     addTodoBtn.addEventListener('click', addTodo);
-    saveTodoBtn.addEventListener('click', saveTodosTxt);
-    uploadTodoBtn.addEventListener('click', loadTodosFromFile);
 
     todoInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -193,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             transition: transform 0.3s, opacity 0.3s;
         }
 
-        .delete-btn, #addTodo, #saveTodo, #uploadTodo {
+        .delete-btn, #addTodo {
             position: relative;
             overflow: hidden;
             transform: scale(1) rotate(0deg);

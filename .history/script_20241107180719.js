@@ -1,14 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const todoInput = document.getElementById('todoInput');
     const addTodoBtn = document.getElementById('addTodo');
-    const saveTodoBtn = document.getElementById('saveTodo');
-    const uploadTodoBtn = document.getElementById('uploadTodo');
     const todoList = document.getElementById('todoList');
 
-    // Load todos from localStorage
-    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    // Load todos from localStorage and txt file
+    let todos = [];
     
-    // Function to save todos to txt file on Desktop
+    // Function to save todos to txt file
     async function saveTodosTxt() {
         const todoText = todos.map(todo => 
             `[${todo.completed ? 'x' : ' '}] ${todo.text}`
@@ -18,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const blob = new Blob([todoText], { type: 'text/plain' });
             const handle = await window.showSaveFilePicker({
                 suggestedName: 'todos.txt',
-                startIn: 'desktop',
                 types: [{
                     description: 'Text Files',
                     accept: { 'text/plain': ['.txt'] },
@@ -109,9 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Save todos to localStorage only
+    // Save todos to localStorage and txt file
     function saveTodos() {
         localStorage.setItem('todos', JSON.stringify(todos));
+        saveTodosTxt(); // Save to txt file
     }
 
     // Load todos from txt file
@@ -136,6 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
             saveTodos();
         } catch (err) {
             console.error('Failed to load todos from file:', err);
+            // Load from localStorage as fallback
+            todos = JSON.parse(localStorage.getItem('todos')) || [];
+            renderTodos();
         }
     }
 
@@ -154,15 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Add effects to buttons
+    // Add effects to Add button
     addButtonEffects(addTodoBtn);
-    addButtonEffects(saveTodoBtn);
-    addButtonEffects(uploadTodoBtn);
 
     // Event listeners
     addTodoBtn.addEventListener('click', addTodo);
-    saveTodoBtn.addEventListener('click', saveTodosTxt);
-    uploadTodoBtn.addEventListener('click', loadTodosFromFile);
 
     todoInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -193,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             transition: transform 0.3s, opacity 0.3s;
         }
 
-        .delete-btn, #addTodo, #saveTodo, #uploadTodo {
+        .delete-btn, #addTodo {
             position: relative;
             overflow: hidden;
             transform: scale(1) rotate(0deg);
@@ -202,7 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 
-    // Initial render
-    renderTodos();
-    todoInput.focus();
+    // Load todos on startup
+    loadTodosFromFile();
 });

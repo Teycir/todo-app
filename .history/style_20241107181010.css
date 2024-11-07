@@ -36,20 +36,12 @@ h1 {
 
 .input-section {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
 #todoInput {
-    width: 90%;
+    flex: 1;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -58,14 +50,18 @@ h1 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#addTodo, #saveTodo, #uploadTodo {
+#addTodo, #uploadTodo {
     padding: 10px 20px;
+    background: linear-gradient(45deg, #1a2a6c, #2a3a7c);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+}
+
+#uploadTodo {
+    background: linear-gradient(45deg, #fdbb2d, #b21f1f);
 }
 
 #todoList {
@@ -115,13 +111,13 @@ h1 {
 }
 
 /* Common button hover styles */
-#addTodo:hover, #saveTodo:hover, #uploadTodo:hover, .delete-btn:hover {
+#addTodo:hover, #uploadTodo:hover, .delete-btn:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     filter: brightness(1.1);
 }
 
 /* Button active state */
-#addTodo:active, #saveTodo:active, #uploadTodo:active, .delete-btn:active {
+#addTodo:active, #uploadTodo:active, .delete-btn:active {
     transform: scale(0.95);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
