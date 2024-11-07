@@ -13,59 +13,16 @@
         }
 
         body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            gap: 20px;
-            position: relative;
         }
 
-        #background-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
+        canvas {
+            background: black;
             width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .title-section {
-            width: 100%;
-            max-width: 800px;
-            height: 200px;
-            position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #particles-js {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .title-section:hover #particles-js {
-            opacity: 1;
-        }
-
-        #titleText {
-            position: relative;
-            z-index: 2;
-            font-size: 4em;
-            color: white;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            height: 150px;
         }
 
         input#textInput {
@@ -77,17 +34,25 @@
             display: none;
         }
 
+        .app-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
         .container {
-            background: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.9),
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0.7)
+            );
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             width: 100%;
             max-width: 500px;
-            z-index: 2;
-            position: relative;
-            overflow: hidden;
         }
 
         .input-section {
@@ -96,8 +61,6 @@
             gap: 15px;
             margin-bottom: 20px;
             align-items: center;
-            position: relative;
-            z-index: 1;
         }
 
         .button-group {
@@ -137,8 +100,6 @@
 
         #todoList {
             list-style: none;
-            position: relative;
-            z-index: 1;
         }
 
         .todo-item {
@@ -188,28 +149,23 @@
     </style>
 </head>
 <body>
-    <canvas id="background-canvas"></canvas>
-    <div class="title-section">
-        <div id="particles-js"></div>
-        <h1 id="titleText">Todo App</h1>
-        <input type="text" id="textInput" value="Todo App">
-    </div>
-    <div class="container">
-        <div class="input-section">
-            <div class="button-group">
-                <button id="addTodo">Add</button>
-                <button id="saveTodo">Save</button>
-                <button id="uploadTodo">Upload</button>
-                <input type="file" id="fileInput" accept=".txt" style="display: none;">
+    <canvas id="canvas1"></canvas>
+    <input type="text" id="textInput" value="Todo App">
+    <div class="app-container">
+        <div class="container">
+            <div class="input-section">
+                <div class="button-group">
+                    <button id="addTodo">Add</button>
+                    <button id="saveTodo">Save</button>
+                    <button id="uploadTodo">Upload</button>
+                    <input type="file" id="fileInput" accept=".txt" style="display: none;">
+                </div>
+                <input type="text" id="todoInput" placeholder="Enter your todo">
             </div>
-            <input type="text" id="todoInput" placeholder="Enter your todo">
+            <ul id="todoList"></ul>
         </div>
-        <ul id="todoList"></ul>
     </div>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="background-animation.js"></script>
     <script src="animation.js"></script>
-    <script src="container-animation.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
