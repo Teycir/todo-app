@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background: linear-gradient(135deg, 
+        rgba(33, 150, 243, 0.9),
+        rgba(33, 150, 243, 0.7) 50%,
+        rgba(3, 169, 244, 0.8)
+    );
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 500px;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#todoInput {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#addTodo {
+    padding: 10px 20px;
+    background-color: #1565C0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#todoList {
+    list-style: none;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.todo-item.completed {
+    background-color: rgba(232, 245, 233, 0.9);
+    text-decoration: line-through;
+    color: #666;
+}
+
+.todo-item input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.todo-text {
+    flex: 1;
+    color: #1a237e;
+}
+
+.delete-btn {
+    padding: 5px 10px;
+    background-color: #1565C0;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Common button hover styles */
+#addTodo:hover, .delete-btn:hover {
+    box-shadow: 0 4px 8px rgba(21, 101, 192, 0.3);
+    background-color: #1976D2;
+}
+
+/* Button active state */
+#addTodo:active, .delete-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(21, 101, 192, 0.3);
+}
