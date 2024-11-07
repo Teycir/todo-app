@@ -11,17 +11,6 @@ body {
     display: flex;
     justify-content: center;
     padding: 20px;
-    position: relative;
-}
-
-#particles-js {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
 }
 
 .container {
@@ -36,8 +25,6 @@ body {
     backdrop-filter: blur(10px);
     width: 100%;
     max-width: 500px;
-    position: relative;
-    z-index: 2;
 }
 
 h1 {
@@ -68,19 +55,23 @@ h1 {
     border: none;
     border-radius: 5px;
     font-size: 16px;
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95),
+        rgba(255, 255, 255, 0.85),
+        rgba(255, 255, 255, 0.95)
+    );
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    color: white;
-}
-
-#todoInput::placeholder {
-    color: rgba(255, 255, 255, 0.8);
 }
 
 #todoInput:focus {
     outline: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.98),
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.98)
+    );
 }
 
 #addTodo, #saveTodo, #uploadTodo {
@@ -91,8 +82,6 @@ h1 {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    width: 100px;
-    text-align: center;
 }
 
 #todoList {
@@ -103,22 +92,22 @@ h1 {
     display: flex;
     align-items: center;
     padding: 10px;
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
     margin-bottom: 8px;
     border-radius: 5px;
     transition: all 0.3s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color: white;
 }
 
 .todo-item:hover {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.9));
     transform: translateX(5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .todo-item.completed {
-    opacity: 0.7;
+    background: linear-gradient(to right, rgba(232, 245, 233, 0.9), rgba(232, 245, 233, 0.8));
     text-decoration: line-through;
+    color: #666;
 }
 
 .todo-item input[type="checkbox"] {
@@ -128,12 +117,12 @@ h1 {
 
 .todo-text {
     flex: 1;
-    color: white;
+    color: #1a2a6c;
 }
 
 .delete-btn {
     padding: 5px 10px;
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background: linear-gradient(45deg, #b21f1f, #c52f2f);
     color: white;
     border: none;
     border-radius: 3px;

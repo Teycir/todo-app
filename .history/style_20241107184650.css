@@ -11,17 +11,6 @@ body {
     display: flex;
     justify-content: center;
     padding: 20px;
-    position: relative;
-}
-
-#particles-js {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
 }
 
 .container {
@@ -36,8 +25,6 @@ body {
     backdrop-filter: blur(10px);
     width: 100%;
     max-width: 500px;
-    position: relative;
-    z-index: 2;
 }
 
 h1 {
@@ -91,8 +78,6 @@ h1 {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    width: 100px;
-    text-align: center;
 }
 
 #todoList {

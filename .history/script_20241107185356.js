@@ -3,74 +3,9 @@ const todoInput = document.getElementById('todoInput');
 const addTodoBtn = document.getElementById('addTodo');
 const saveTodoBtn = document.getElementById('saveTodo');
 const uploadTodoBtn = document.getElementById('uploadTodo');
-const fileInput = document.getElementById('fileInput');
 const todoList = document.getElementById('todoList');
 
 let todos = [];
-
-function saveTodos() {
-    // Create content string from todos
-    const content = todos.map(todo => todo.text).join('\n');
-    
-    // Create blob and download link
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'todos.txt';
-    document.body.appendChild(a);
-    a.click();
-    
-    // Cleanup
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    // Visual feedback
-    saveTodoBtn.textContent = 'Saved!';
-    setTimeout(() => {
-        saveTodoBtn.textContent = 'Save';
-    }, 1000);
-}
-
-function uploadTodos() {
-    fileInput.click();
-}
-
-fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const content = e.target.result;
-            // Clear existing todos
-            todos = [];
-            todoList.innerHTML = '';
-            
-            // Create new todos from file content
-            content.split('\n').forEach(text => {
-                if (text.trim()) {
-                    const todo = {
-                        id: Date.now() + Math.random(),
-                        text: text.trim(),
-                        completed: false
-                    };
-                    todos.push(todo);
-                    renderTodo(todo);
-                }
-            });
-            
-            // Reset file input
-            fileInput.value = '';
-            
-            // Visual feedback
-            uploadTodoBtn.textContent = 'Loaded!';
-            setTimeout(() => {
-                uploadTodoBtn.textContent = 'Upload';
-            }, 1000);
-        };
-        reader.readAsText(file);
-    }
-});
 
 function addTodo() {
     const todoText = todoInput.value.trim();
@@ -89,7 +24,6 @@ function addTodo() {
 function renderTodo(todo) {
     const li = document.createElement('li');
     li.className = 'todo-item';
-    li.dataset.id = todo.id;
     li.innerHTML = `
         <input type="checkbox" ${todo.completed ? 'checked' : ''}>
         <span class="todo-text">${todo.text}</span>
@@ -124,11 +58,7 @@ function deleteTodo(id) {
     }
 }
 
-// Event Listeners
 addTodoBtn.addEventListener('click', addTodo);
-saveTodoBtn.addEventListener('click', saveTodos);
-uploadTodoBtn.addEventListener('click', uploadTodos);
-
 todoInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         addTodo();

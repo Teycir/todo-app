@@ -3,29 +3,22 @@ const todoInput = document.getElementById('todoInput');
 const addTodoBtn = document.getElementById('addTodo');
 const saveTodoBtn = document.getElementById('saveTodo');
 const uploadTodoBtn = document.getElementById('uploadTodo');
-const fileInput = document.getElementById('fileInput');
 const todoList = document.getElementById('todoList');
 
 let todos = [];
 
+// Load todos from localStorage on startup
+function loadTodos() {
+    const savedTodos = localStorage.getItem('todos');
+    if (savedTodos) {
+        todos = JSON.parse(savedTodos);
+        todos.forEach(todo => renderTodo(todo));
+    }
+}
+
 function saveTodos() {
-    // Create content string from todos
-    const content = todos.map(todo => todo.text).join('\n');
-    
-    // Create blob and download link
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'todos.txt';
-    document.body.appendChild(a);
-    a.click();
-    
-    // Cleanup
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    // Visual feedback
+    localStorage.setItem('todos', JSON.stringify(todos));
+    // Visual feedback for save
     saveTodoBtn.textContent = 'Saved!';
     setTimeout(() => {
         saveTodoBtn.textContent = 'Save';
@@ -33,44 +26,28 @@ function saveTodos() {
 }
 
 function uploadTodos() {
-    fileInput.click();
+    // Create a file with todos data
+    const data = JSON.stringify(todos, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    // Create download link
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'todos.json';
+    document.body.appendChild(a);
+    a.click();
+    
+    // Cleanup
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    // Visual feedback for upload
+    uploadTodoBtn.textContent = 'Downloaded!';
+    setTimeout(() => {
+        uploadTodoBtn.textContent = 'Upload';
+    }, 1000);
 }
-
-fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const content = e.target.result;
-            // Clear existing todos
-            todos = [];
-            todoList.innerHTML = '';
-            
-            // Create new todos from file content
-            content.split('\n').forEach(text => {
-                if (text.trim()) {
-                    const todo = {
-                        id: Date.now() + Math.random(),
-                        text: text.trim(),
-                        completed: false
-                    };
-                    todos.push(todo);
-                    renderTodo(todo);
-                }
-            });
-            
-            // Reset file input
-            fileInput.value = '';
-            
-            // Visual feedback
-            uploadTodoBtn.textContent = 'Loaded!';
-            setTimeout(() => {
-                uploadTodoBtn.textContent = 'Upload';
-            }, 1000);
-        };
-        reader.readAsText(file);
-    }
-});
 
 function addTodo() {
     const todoText = todoInput.value.trim();
@@ -134,6 +111,9 @@ todoInput.addEventListener('keypress', (e) => {
         addTodo();
     }
 });
+
+// Load saved todos on startup
+loadTodos();
 
 // Particles.js configuration
 particlesJS('particles-js', {
